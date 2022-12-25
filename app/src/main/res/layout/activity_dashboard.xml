@@ -31,5 +31,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.658" />
+        app:layout_constraintVertical_bias="0.658"
+        android:onClick="clickLogout"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
