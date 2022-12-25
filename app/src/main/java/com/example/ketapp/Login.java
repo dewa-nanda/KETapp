@@ -29,7 +29,7 @@ public class Login extends AppCompatActivity {
 
     public void clickLoginAccount(View view) {
         if (TextUtils.isEmpty(textUsername.getText().toString().trim()) || TextUtils.isEmpty(textPassword.getText().toString().trim())) {
-            Toast.makeText(view.getContext(), "Username tidak boleh kosong!", Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(), "Username / Password tidak boleh kosong!", Toast.LENGTH_LONG).show();
         } else {
             Intent i = new Intent(Login.this, dashboard.class);
             startActivity(i);
