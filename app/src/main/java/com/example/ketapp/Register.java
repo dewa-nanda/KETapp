@@ -21,17 +21,21 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        this.initComponents();
+    }
+
+    private void initComponents(){
         txtUsername = findViewById(R.id.username);
         txtNim = findViewById(R.id.nim);
         txtPassword = findViewById(R.id.password);
     }
 
-    public void postCreateAcc (View view) {
-        if(TextUtils.isEmpty(txtUsername.getText().toString().trim()) || TextUtils.isEmpty(txtNim.getText().toString().trim()) || TextUtils.isEmpty(txtNim.getText().toString().trim())) {
-            Toast.makeText(view.getContext(), "Username / Password tidak boleh kosong!", Toast.LENGTH_LONG).show();
-        }else{
-            Intent i = new Intent(Register.this, Login.class);
-            startActivity(i);
-        }
+//    click actions
+    public void onBtnRegisterNow_Click (View view) {
+        // Tampilkan pesan konfirmasi
+        Toast.makeText(this, "Register Success!", Toast.LENGTH_SHORT).show();
+
+        // Kembali ke halaman login
+        this.finish();
     }
 }
