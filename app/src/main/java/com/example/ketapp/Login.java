@@ -13,6 +13,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ketapp.data.UserDao;
+import com.example.ketapp.data.AppDbProvider;
+import com.example.ketapp.data.User;
+
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -23,8 +28,7 @@ public class Login extends AppCompatActivity {
     private SharedPreferences sharedPrefs;
 
     private static final String KEEP_LOGIN_KEY = "key_keep_login";
-    private static final String DUMMY_USERNAME = "dewa";
-    private static final String DUMMY_PASSWORD = "dewa";
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +50,7 @@ public class Login extends AppCompatActivity {
 
     //    Click Actions
     public void onBtnLogin_Click(View view){
-        boolean valid = this.validateCredential();
-
+        boolean valid = auth();
 
         if(valid){
             Intent i = new Intent(Login.this, dashboard.class);
@@ -71,22 +74,28 @@ public class Login extends AppCompatActivity {
 
         if(this.checkAutoLogin.isChecked())
             editor.putBoolean(KEEP_LOGIN_KEY, true);
-        else
-            editor.remove(KEEP_LOGIN_KEY);
 
         editor.apply();
     }
 
-    private boolean validateCredential()
+    private boolean auth()
     {
-        String currentUsername = this.textUsername.getText().toString();
-        String currentPassword = this.textPassword.getText().toString();
+        String nim = this.textUsername.getText().toString();
+        String password = this.textPassword.getText().toString();
 
-        return (Objects.equals(currentUsername, DUMMY_USERNAME)
-                && Objects.equals(currentPassword, DUMMY_PASSWORD));
+        if(TextUtils.isEmpty(nim) || TextUtils.isEmpty(password)){
+            Toast.makeText(this, "seluruh field harus diisi!", Toast.LENGTH_SHORT).show();
+        }else{
+            UserDao daoUser = AppDbProvider.getInstance(this).userDao();
+            user = daoUser.findByNimAndPassword(nim, password);
+            if(user!=null){
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    // QUIZ!
     private void autoLogin()
     {
         boolean auto = this.sharedPrefs.getBoolean(KEEP_LOGIN_KEY, false);
